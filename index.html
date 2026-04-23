@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_94b52317a5b054d6a18c2de01cfb4fa4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; 
+            background-color: white; padding: 12px; border:1px solid #ccc; 
+            border-radius:6px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+     <h4 style="margin-top:0; margin-bottom:8px; font-size:14px;">调度图例</h4>
+     <p style="margin:4px 0; font-size:12px;">
+        <i class="fa fa-arrow-down" style="color:red"></i> 车辆调出站（冗余站点）
+     </p>
+     <p style="margin:4px 0; font-size:12px;">
+        <i class="fa fa-arrow-up" style="color:blue"></i> 车辆调入站（缺车站点）
+     </p>
+     <p style="margin:4px 0; font-size:12px;">
+        <i class="fa fa-circle" style="color:gray"></i> 无调度站点
+     </p>
+     <hr style="margin:6px 0; border:none; border-top:1px solid #eee;">
+     <p style="margin:4px 0; font-size:12px;">
+        <span style="display:inline-block; width:20px; height:3px; background:#ff7f0e;"></span> 调度运输路线
+     </p>
+</div>
+    
+            <div class="folium-map" id="map_94b52317a5b054d6a18c2de01cfb4fa4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_94b52317a5b054d6a18c2de01cfb4fa4 = L.map(
+                "map_94b52317a5b054d6a18c2de01cfb4fa4",
+                {
+                    center: [29.87, 121.6],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+
+            
+
+        
+    
+            var tile_layer_18e70af0f93d17baba8be390f29f5854 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_18e70af0f93d17baba8be390f29f5854.addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var marker_8f234252f973a6dcb2b564bb0cbc2e58 = L.marker(
+                [29.9176, 121.6318],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_aeeeb052e9f3441954341995fc2b381f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7ba42b6d180a0fc1e807488bc11adba1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_36ad79cec13047101c132c6a169efcfa = $(`<div id="html_36ad79cec13047101c132c6a169efcfa" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S001: 宁波大学正门站</strong><br>         桩位容量: 25 个<br>         初始库存: 12 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_7ba42b6d180a0fc1e807488bc11adba1.setContent(html_36ad79cec13047101c132c6a169efcfa);
+            
+        
+
+        marker_8f234252f973a6dcb2b564bb0cbc2e58.bindPopup(popup_7ba42b6d180a0fc1e807488bc11adba1)
+        ;
+
+        
+    
+    
+            marker_8f234252f973a6dcb2b564bb0cbc2e58.bindTooltip(
+                `<div>
+                     S001: 宁波大学正门站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8f234252f973a6dcb2b564bb0cbc2e58.setIcon(icon_aeeeb052e9f3441954341995fc2b381f);
+            
+    
+            var marker_11b2cd1dba67f86ed596a68628727f94 = L.marker(
+                [29.9079, 121.6444],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_9db5b61dda882533853c8bf451365721 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_868788f1aae148ff713bd932a85634bc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ae0dbdc3dd36431f89d6f34bc394d8cd = $(`<div id="html_ae0dbdc3dd36431f89d6f34bc394d8cd" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S002: 宁波大学南门站</strong><br>         桩位容量: 50 个<br>         初始库存: 11 辆     <br><span style="color:blue;">● 状态: 车辆调入站（缺车站点）</span></div></div>`)[0];
+                popup_868788f1aae148ff713bd932a85634bc.setContent(html_ae0dbdc3dd36431f89d6f34bc394d8cd);
+            
+        
+
+        marker_11b2cd1dba67f86ed596a68628727f94.bindPopup(popup_868788f1aae148ff713bd932a85634bc)
+        ;
+
+        
+    
+    
+            marker_11b2cd1dba67f86ed596a68628727f94.bindTooltip(
+                `<div>
+                     S002: 宁波大学南门站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_11b2cd1dba67f86ed596a68628727f94.setIcon(icon_9db5b61dda882533853c8bf451365721);
+            
+    
+            var marker_eb335b989a3b693685a91cf96469f219 = L.marker(
+                [29.8822, 121.6509],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_22cacbd1484d99c050669eeff5e5c8c9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_930c7821649c0e183715133ae96c0f0b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dddeb100d1a24ff47f3d04219a844732 = $(`<div id="html_dddeb100d1a24ff47f3d04219a844732" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S003: 宁波大学图书馆站</strong><br>         桩位容量: 50 个<br>         初始库存: 6 辆     <br><span style="color:blue;">● 状态: 车辆调入站（缺车站点）</span></div></div>`)[0];
+                popup_930c7821649c0e183715133ae96c0f0b.setContent(html_dddeb100d1a24ff47f3d04219a844732);
+            
+        
+
+        marker_eb335b989a3b693685a91cf96469f219.bindPopup(popup_930c7821649c0e183715133ae96c0f0b)
+        ;
+
+        
+    
+    
+            marker_eb335b989a3b693685a91cf96469f219.bindTooltip(
+                `<div>
+                     S003: 宁波大学图书馆站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_eb335b989a3b693685a91cf96469f219.setIcon(icon_22cacbd1484d99c050669eeff5e5c8c9);
+            
+    
+            var marker_03f8dd08c00223ae3fbbd0bad840fda1 = L.marker(
+                [29.9102, 121.6428],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_550baa5032eacdf3e11d0aa5f1c106d4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fa900e7c7bddd4dd61fcd975b02fc749 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b54861c61125c1b8a4a6186315201b28 = $(`<div id="html_b54861c61125c1b8a4a6186315201b28" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S004: 宁波大学体育馆站</strong><br>         桩位容量: 20 个<br>         初始库存: 10 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_fa900e7c7bddd4dd61fcd975b02fc749.setContent(html_b54861c61125c1b8a4a6186315201b28);
+            
+        
+
+        marker_03f8dd08c00223ae3fbbd0bad840fda1.bindPopup(popup_fa900e7c7bddd4dd61fcd975b02fc749)
+        ;
+
+        
+    
+    
+            marker_03f8dd08c00223ae3fbbd0bad840fda1.bindTooltip(
+                `<div>
+                     S004: 宁波大学体育馆站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_03f8dd08c00223ae3fbbd0bad840fda1.setIcon(icon_550baa5032eacdf3e11d0aa5f1c106d4);
+            
+    
+            var marker_74bccc9cd5dedabf892af283ccb7ae1c = L.marker(
+                [29.7998, 121.5633],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_5b52be349d1eb081bd182864846b9d55 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_94eb67e53bc695f3dd51ee77fef800fc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_af61cc1be3983d6ea7563518ace4e561 = $(`<div id="html_af61cc1be3983d6ea7563518ace4e561" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S005: 诺丁汉大学东门站</strong><br>         桩位容量: 25 个<br>         初始库存: 18 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_94eb67e53bc695f3dd51ee77fef800fc.setContent(html_af61cc1be3983d6ea7563518ace4e561);
+            
+        
+
+        marker_74bccc9cd5dedabf892af283ccb7ae1c.bindPopup(popup_94eb67e53bc695f3dd51ee77fef800fc)
+        ;
+
+        
+    
+    
+            marker_74bccc9cd5dedabf892af283ccb7ae1c.bindTooltip(
+                `<div>
+                     S005: 诺丁汉大学东门站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_74bccc9cd5dedabf892af283ccb7ae1c.setIcon(icon_5b52be349d1eb081bd182864846b9d55);
+            
+    
+            var marker_c84b39ab9111657c679efb159bc1a6a8 = L.marker(
+                [29.7998, 121.5633],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_b891a466919cf507d924d2dedb3d7853 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_21d5feecf4c3acf8c6e2b68d3f38ae6a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bb7ab4629f9cdb4706264af7594ce914 = $(`<div id="html_bb7ab4629f9cdb4706264af7594ce914" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S006: 诺丁汉大学西门站</strong><br>         桩位容量: 25 个<br>         初始库存: 20 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_21d5feecf4c3acf8c6e2b68d3f38ae6a.setContent(html_bb7ab4629f9cdb4706264af7594ce914);
+            
+        
+
+        marker_c84b39ab9111657c679efb159bc1a6a8.bindPopup(popup_21d5feecf4c3acf8c6e2b68d3f38ae6a)
+        ;
+
+        
+    
+    
+            marker_c84b39ab9111657c679efb159bc1a6a8.bindTooltip(
+                `<div>
+                     S006: 诺丁汉大学西门站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c84b39ab9111657c679efb159bc1a6a8.setIcon(icon_b891a466919cf507d924d2dedb3d7853);
+            
+    
+            var marker_29431f95343d3351084404be3441c498 = L.marker(
+                [29.7979, 121.5652],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_1f2af8686eb31abf5f2914f2cfa25d96 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2a67d8edc2e740e5c176f383139d98f4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_44184fdb27c525fdfaf8581f971871df = $(`<div id="html_44184fdb27c525fdfaf8581f971871df" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S007: 诺丁汉大学中心广场站</strong><br>         桩位容量: 25 个<br>         初始库存: 3 辆     <br><span style="color:blue;">● 状态: 车辆调入站（缺车站点）</span></div></div>`)[0];
+                popup_2a67d8edc2e740e5c176f383139d98f4.setContent(html_44184fdb27c525fdfaf8581f971871df);
+            
+        
+
+        marker_29431f95343d3351084404be3441c498.bindPopup(popup_2a67d8edc2e740e5c176f383139d98f4)
+        ;
+
+        
+    
+    
+            marker_29431f95343d3351084404be3441c498.bindTooltip(
+                `<div>
+                     S007: 诺丁汉大学中心广场站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_29431f95343d3351084404be3441c498.setIcon(icon_1f2af8686eb31abf5f2914f2cfa25d96);
+            
+    
+            var marker_3bf59a04ccd27bdef96fb3789e742842 = L.marker(
+                [29.7991, 121.5659],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_98426e255a083b6d816917780ec1c01c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_665d4a9650d124fa41fd3ab11bcd5ea5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9ab819304d0ed74b3c7937ad6a2066df = $(`<div id="html_9ab819304d0ed74b3c7937ad6a2066df" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S008: 诺丁汉大学宿舍区站</strong><br>         桩位容量: 20 个<br>         初始库存: 7 辆     <br><span style="color:blue;">● 状态: 车辆调入站（缺车站点）</span></div></div>`)[0];
+                popup_665d4a9650d124fa41fd3ab11bcd5ea5.setContent(html_9ab819304d0ed74b3c7937ad6a2066df);
+            
+        
+
+        marker_3bf59a04ccd27bdef96fb3789e742842.bindPopup(popup_665d4a9650d124fa41fd3ab11bcd5ea5)
+        ;
+
+        
+    
+    
+            marker_3bf59a04ccd27bdef96fb3789e742842.bindTooltip(
+                `<div>
+                     S008: 诺丁汉大学宿舍区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3bf59a04ccd27bdef96fb3789e742842.setIcon(icon_98426e255a083b6d816917780ec1c01c);
+            
+    
+            var marker_99941e41c347f4734e995921ec797763 = L.marker(
+                [29.8259, 121.5459],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_2a45585c17ee791e169f8d0996c22d9d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d3d41f53fc6b0c47f5552c2545c9296b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_53ef2fb3810e9de0ca31da1725bd8fcb = $(`<div id="html_53ef2fb3810e9de0ca31da1725bd8fcb" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S009: 鄞州万达广场站</strong><br>         桩位容量: 50 个<br>         初始库存: 36 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_d3d41f53fc6b0c47f5552c2545c9296b.setContent(html_53ef2fb3810e9de0ca31da1725bd8fcb);
+            
+        
+
+        marker_99941e41c347f4734e995921ec797763.bindPopup(popup_d3d41f53fc6b0c47f5552c2545c9296b)
+        ;
+
+        
+    
+    
+            marker_99941e41c347f4734e995921ec797763.bindTooltip(
+                `<div>
+                     S009: 鄞州万达广场站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_99941e41c347f4734e995921ec797763.setIcon(icon_2a45585c17ee791e169f8d0996c22d9d);
+            
+    
+            var marker_6de38c5dffb9af2f3eac8dbff81783bd = L.marker(
+                [29.817, 121.5443],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_81697a05ded7281f3598db030ecca0d8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_631fd478274c89166fddc4f3f14b396e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_27c2aa0149df257834e4efa780658f5f = $(`<div id="html_27c2aa0149df257834e4efa780658f5f" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S010: 鄞州区政府站</strong><br>         桩位容量: 25 个<br>         初始库存: 3 辆     <br><span style="color:red;">● 状态: 车辆调出站（冗余站点）</span></div></div>`)[0];
+                popup_631fd478274c89166fddc4f3f14b396e.setContent(html_27c2aa0149df257834e4efa780658f5f);
+            
+        
+
+        marker_6de38c5dffb9af2f3eac8dbff81783bd.bindPopup(popup_631fd478274c89166fddc4f3f14b396e)
+        ;
+
+        
+    
+    
+            marker_6de38c5dffb9af2f3eac8dbff81783bd.bindTooltip(
+                `<div>
+                     S010: 鄞州区政府站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6de38c5dffb9af2f3eac8dbff81783bd.setIcon(icon_81697a05ded7281f3598db030ecca0d8);
+            
+    
+            var marker_ab2de62191b52ac42b3079056b7a4a2a = L.marker(
+                [29.8106, 121.5622],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_fd8f0f131e15ee31cf1c17c9866c494e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2c539f63e19472aed08503db08d0071c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e4e928ab0aa2e42cf4a84a8fb7702b07 = $(`<div id="html_e4e928ab0aa2e42cf4a84a8fb7702b07" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S011: 鄞州体育中心站</strong><br>         桩位容量: 25 个<br>         初始库存: 25 辆     <br><span style="color:red;">● 状态: 车辆调出站（冗余站点）</span></div></div>`)[0];
+                popup_2c539f63e19472aed08503db08d0071c.setContent(html_e4e928ab0aa2e42cf4a84a8fb7702b07);
+            
+        
+
+        marker_ab2de62191b52ac42b3079056b7a4a2a.bindPopup(popup_2c539f63e19472aed08503db08d0071c)
+        ;
+
+        
+    
+    
+            marker_ab2de62191b52ac42b3079056b7a4a2a.bindTooltip(
+                `<div>
+                     S011: 鄞州体育中心站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ab2de62191b52ac42b3079056b7a4a2a.setIcon(icon_fd8f0f131e15ee31cf1c17c9866c494e);
+            
+    
+            var marker_945996da5482fe2d50ebb72cb71bfb27 = L.marker(
+                [29.8696, 121.5539],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_7819700c88774e6d6544a8d452a13103 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_778afbd96f73cc401f58cbbf3068a050 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_623e497756a65a31c2bce0b20074948c = $(`<div id="html_623e497756a65a31c2bce0b20074948c" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S012: 天一广场站</strong><br>         桩位容量: 50 个<br>         初始库存: 19 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_778afbd96f73cc401f58cbbf3068a050.setContent(html_623e497756a65a31c2bce0b20074948c);
+            
+        
+
+        marker_945996da5482fe2d50ebb72cb71bfb27.bindPopup(popup_778afbd96f73cc401f58cbbf3068a050)
+        ;
+
+        
+    
+    
+            marker_945996da5482fe2d50ebb72cb71bfb27.bindTooltip(
+                `<div>
+                     S012: 天一广场站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_945996da5482fe2d50ebb72cb71bfb27.setIcon(icon_7819700c88774e6d6544a8d452a13103);
+            
+    
+            var marker_376338953b41540898b56834d6e09020 = L.marker(
+                [29.8535, 121.6333],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_c75519aca2197d3e075427f50e928c1e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_51a46a037b9a6893142499689a7b5ea7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e79057936f59e0f2f3bfb181e1c6fb7a = $(`<div id="html_e79057936f59e0f2f3bfb181e1c6fb7a" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S013: 东部新城地铁站</strong><br>         桩位容量: 20 个<br>         初始库存: 18 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_51a46a037b9a6893142499689a7b5ea7.setContent(html_e79057936f59e0f2f3bfb181e1c6fb7a);
+            
+        
+
+        marker_376338953b41540898b56834d6e09020.bindPopup(popup_51a46a037b9a6893142499689a7b5ea7)
+        ;
+
+        
+    
+    
+            marker_376338953b41540898b56834d6e09020.bindTooltip(
+                `<div>
+                     S013: 东部新城地铁站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_376338953b41540898b56834d6e09020.setIcon(icon_c75519aca2197d3e075427f50e928c1e);
+            
+    
+            var marker_bcf085a0bd0ec2515ace9142e5c05d12 = L.marker(
+                [29.8809, 121.6401],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_7581cf3ee84911051c554bf0293ef391 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_763d065148b46134452f8bf3fcddd2f6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9cc65ac09f6d973cbc3394dcad4dcfb4 = $(`<div id="html_9cc65ac09f6d973cbc3394dcad4dcfb4" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S014: 科技园A区站</strong><br>         桩位容量: 40 个<br>         初始库存: 19 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_763d065148b46134452f8bf3fcddd2f6.setContent(html_9cc65ac09f6d973cbc3394dcad4dcfb4);
+            
+        
+
+        marker_bcf085a0bd0ec2515ace9142e5c05d12.bindPopup(popup_763d065148b46134452f8bf3fcddd2f6)
+        ;
+
+        
+    
+    
+            marker_bcf085a0bd0ec2515ace9142e5c05d12.bindTooltip(
+                `<div>
+                     S014: 科技园A区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bcf085a0bd0ec2515ace9142e5c05d12.setIcon(icon_7581cf3ee84911051c554bf0293ef391);
+            
+    
+            var marker_c66eaa7667551b712794a172174e8169 = L.marker(
+                [29.8932, 121.66],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_8dfb4d54057965460bc7cc97ccda0a4e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8aefb1c98173721afa3c1e1f2141bbb7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ec26e81c28b7ed57362034a893492192 = $(`<div id="html_ec26e81c28b7ed57362034a893492192" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S015: 科技园B区站</strong><br>         桩位容量: 20 个<br>         初始库存: 13 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_8aefb1c98173721afa3c1e1f2141bbb7.setContent(html_ec26e81c28b7ed57362034a893492192);
+            
+        
+
+        marker_c66eaa7667551b712794a172174e8169.bindPopup(popup_8aefb1c98173721afa3c1e1f2141bbb7)
+        ;
+
+        
+    
+    
+            marker_c66eaa7667551b712794a172174e8169.bindTooltip(
+                `<div>
+                     S015: 科技园B区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c66eaa7667551b712794a172174e8169.setIcon(icon_8dfb4d54057965460bc7cc97ccda0a4e);
+            
+    
+            var marker_c0289ead4a7589b148c1023f1be34fe9 = L.marker(
+                [29.8875, 121.6314],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_16279731292f7188a654ec46b636dc02 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2bbbe500dadc1cefdff220ff8a80094e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6ed982688aeb1d67cbc2fdd2661b079c = $(`<div id="html_6ed982688aeb1d67cbc2fdd2661b079c" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S016: 高新区商业中心站</strong><br>         桩位容量: 40 个<br>         初始库存: 10 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_2bbbe500dadc1cefdff220ff8a80094e.setContent(html_6ed982688aeb1d67cbc2fdd2661b079c);
+            
+        
+
+        marker_c0289ead4a7589b148c1023f1be34fe9.bindPopup(popup_2bbbe500dadc1cefdff220ff8a80094e)
+        ;
+
+        
+    
+    
+            marker_c0289ead4a7589b148c1023f1be34fe9.bindTooltip(
+                `<div>
+                     S016: 高新区商业中心站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c0289ead4a7589b148c1023f1be34fe9.setIcon(icon_16279731292f7188a654ec46b636dc02);
+            
+    
+            var marker_f319080393960330d434abf226c67901 = L.marker(
+                [29.862, 121.5369],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_5f0be714b26c3e1873aff75f7481b790 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ff6e439c7ca7a87264630333699b8fe8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_143e8f8038dc44dd44509180042b5dd7 = $(`<div id="html_143e8f8038dc44dd44509180042b5dd7" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S017: 宁波火车站</strong><br>         桩位容量: 30 个<br>         初始库存: 26 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_ff6e439c7ca7a87264630333699b8fe8.setContent(html_143e8f8038dc44dd44509180042b5dd7);
+            
+        
+
+        marker_f319080393960330d434abf226c67901.bindPopup(popup_ff6e439c7ca7a87264630333699b8fe8)
+        ;
+
+        
+    
+    
+            marker_f319080393960330d434abf226c67901.bindTooltip(
+                `<div>
+                     S017: 宁波火车站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f319080393960330d434abf226c67901.setIcon(icon_5f0be714b26c3e1873aff75f7481b790);
+            
+    
+            var marker_35af5db40f080db0726b70c437c32c34 = L.marker(
+                [29.8617, 121.5337],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_96b592c13330b5188b726034d63699c5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a331f0d11562215981254ec047fb1067 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2a97e1bf9decb9dd9e0557a4fd7b8b81 = $(`<div id="html_2a97e1bf9decb9dd9e0557a4fd7b8b81" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S018: 宁波南站</strong><br>         桩位容量: 50 个<br>         初始库存: 14 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_a331f0d11562215981254ec047fb1067.setContent(html_2a97e1bf9decb9dd9e0557a4fd7b8b81);
+            
+        
+
+        marker_35af5db40f080db0726b70c437c32c34.bindPopup(popup_a331f0d11562215981254ec047fb1067)
+        ;
+
+        
+    
+    
+            marker_35af5db40f080db0726b70c437c32c34.bindTooltip(
+                `<div>
+                     S018: 宁波南站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_35af5db40f080db0726b70c437c32c34.setIcon(icon_96b592c13330b5188b726034d63699c5);
+            
+    
+            var marker_991e4bab1fb6a21d542e58e37e020d22 = L.marker(
+                [29.8087, 121.4737],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_566d70d8d7c3f89f44f608c39cd974e2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aca8353a681f4a0b07b7f083363790cc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3c7a0c983fb246aec812201afbf7f1b2 = $(`<div id="html_3c7a0c983fb246aec812201afbf7f1b2" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S019: 机场路口站</strong><br>         桩位容量: 40 个<br>         初始库存: 22 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_aca8353a681f4a0b07b7f083363790cc.setContent(html_3c7a0c983fb246aec812201afbf7f1b2);
+            
+        
+
+        marker_991e4bab1fb6a21d542e58e37e020d22.bindPopup(popup_aca8353a681f4a0b07b7f083363790cc)
+        ;
+
+        
+    
+    
+            marker_991e4bab1fb6a21d542e58e37e020d22.bindTooltip(
+                `<div>
+                     S019: 机场路口站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_991e4bab1fb6a21d542e58e37e020d22.setIcon(icon_566d70d8d7c3f89f44f608c39cd974e2);
+            
+    
+            var marker_2d455c7125617a4c35d446fc331b549e = L.marker(
+                [29.9505, 121.7072],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_126f9d79ccfe97ae2aaac4ac3b2d043f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ac333ff71e01a0d5b79dd1197322e050 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f243ea74bf6eebec141327f3cf4a1aae = $(`<div id="html_f243ea74bf6eebec141327f3cf4a1aae" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S020: 镇海区中心站</strong><br>         桩位容量: 50 个<br>         初始库存: 1 辆     <br><span style="color:red;">● 状态: 车辆调出站（冗余站点）</span></div></div>`)[0];
+                popup_ac333ff71e01a0d5b79dd1197322e050.setContent(html_f243ea74bf6eebec141327f3cf4a1aae);
+            
+        
+
+        marker_2d455c7125617a4c35d446fc331b549e.bindPopup(popup_ac333ff71e01a0d5b79dd1197322e050)
+        ;
+
+        
+    
+    
+            marker_2d455c7125617a4c35d446fc331b549e.bindTooltip(
+                `<div>
+                     S020: 镇海区中心站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2d455c7125617a4c35d446fc331b549e.setIcon(icon_126f9d79ccfe97ae2aaac4ac3b2d043f);
+            
+    
+            var marker_41aa8a9125afa47b6612d7f4c484425d = L.marker(
+                [29.9168, 121.5315],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_7f0342a8cbb5524f2ce7dbd9470ea7e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8f77460ff93f0b2c660d925e1a7f4fb0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e486661e1aa9fa4e84352c1cfb7e3bc9 = $(`<div id="html_e486661e1aa9fa4e84352c1cfb7e3bc9" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S021: 江北万达站</strong><br>         桩位容量: 30 个<br>         初始库存: 17 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_8f77460ff93f0b2c660d925e1a7f4fb0.setContent(html_e486661e1aa9fa4e84352c1cfb7e3bc9);
+            
+        
+
+        marker_41aa8a9125afa47b6612d7f4c484425d.bindPopup(popup_8f77460ff93f0b2c660d925e1a7f4fb0)
+        ;
+
+        
+    
+    
+            marker_41aa8a9125afa47b6612d7f4c484425d.bindTooltip(
+                `<div>
+                     S021: 江北万达站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_41aa8a9125afa47b6612d7f4c484425d.setIcon(icon_7f0342a8cbb5524f2ce7dbd9470ea7e4);
+            
+    
+            var marker_824c2896f6429ceccb3e1cabb03aff78 = L.marker(
+                [29.9228, 121.8758],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_f04f1c07372bd24f4f823f659d9f175e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0215c38e575cb1f387685c5ff5b268a0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_53c778629deec6c3e13f0d77af3454fd = $(`<div id="html_53c778629deec6c3e13f0d77af3454fd" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S022: 北仑港区站</strong><br>         桩位容量: 25 个<br>         初始库存: 6 辆     <br><span style="color:blue;">● 状态: 车辆调入站（缺车站点）</span></div></div>`)[0];
+                popup_0215c38e575cb1f387685c5ff5b268a0.setContent(html_53c778629deec6c3e13f0d77af3454fd);
+            
+        
+
+        marker_824c2896f6429ceccb3e1cabb03aff78.bindPopup(popup_0215c38e575cb1f387685c5ff5b268a0)
+        ;
+
+        
+    
+    
+            marker_824c2896f6429ceccb3e1cabb03aff78.bindTooltip(
+                `<div>
+                     S022: 北仑港区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_824c2896f6429ceccb3e1cabb03aff78.setIcon(icon_f04f1c07372bd24f4f823f659d9f175e);
+            
+    
+            var marker_99c46f7b8cff72422eea3dcc1616fde6 = L.marker(
+                [29.8118, 121.5381],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_fa6dd847bb73612b69ea34ba72f76aa5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7b7953904b4f32c34ab0ad0985272826 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8ef39aa048e6b9148af6743425f176c7 = $(`<div id="html_8ef39aa048e6b9148af6743425f176c7" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S023: 鄞州公园站</strong><br>         桩位容量: 20 个<br>         初始库存: 10 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_7b7953904b4f32c34ab0ad0985272826.setContent(html_8ef39aa048e6b9148af6743425f176c7);
+            
+        
+
+        marker_99c46f7b8cff72422eea3dcc1616fde6.bindPopup(popup_7b7953904b4f32c34ab0ad0985272826)
+        ;
+
+        
+    
+    
+            marker_99c46f7b8cff72422eea3dcc1616fde6.bindTooltip(
+                `<div>
+                     S023: 鄞州公园站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_99c46f7b8cff72422eea3dcc1616fde6.setIcon(icon_fa6dd847bb73612b69ea34ba72f76aa5);
+            
+    
+            var marker_30b2d241f2895c74fb55ffd7e4bc8479 = L.marker(
+                [29.8346, 121.5897],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_d9538466f42d62819a296ccc56ce3b28 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_54c84e0b125f96aec35dd67135544d95 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c7c709e285c3c816b7a48ebed92de09e = $(`<div id="html_c7c709e285c3c816b7a48ebed92de09e" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S024: 潘火桥地铁站</strong><br>         桩位容量: 20 个<br>         初始库存: 8 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_54c84e0b125f96aec35dd67135544d95.setContent(html_c7c709e285c3c816b7a48ebed92de09e);
+            
+        
+
+        marker_30b2d241f2895c74fb55ffd7e4bc8479.bindPopup(popup_54c84e0b125f96aec35dd67135544d95)
+        ;
+
+        
+    
+    
+            marker_30b2d241f2895c74fb55ffd7e4bc8479.bindTooltip(
+                `<div>
+                     S024: 潘火桥地铁站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_30b2d241f2895c74fb55ffd7e4bc8479.setIcon(icon_d9538466f42d62819a296ccc56ce3b28);
+            
+    
+            var marker_30396cf4704d2d7f8dc83fe92a6a34d9 = L.marker(
+                [29.8621, 121.594],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_9cc386aae34888d7364b716e83a3632b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_14d53fe01cd416a4ad789bb3beeb1584 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7942cae4a238c43644a1bf39480ca364 = $(`<div id="html_7942cae4a238c43644a1bf39480ca364" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S025: 世纪东方商城站</strong><br>         桩位容量: 50 个<br>         初始库存: 30 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_14d53fe01cd416a4ad789bb3beeb1584.setContent(html_7942cae4a238c43644a1bf39480ca364);
+            
+        
+
+        marker_30396cf4704d2d7f8dc83fe92a6a34d9.bindPopup(popup_14d53fe01cd416a4ad789bb3beeb1584)
+        ;
+
+        
+    
+    
+            marker_30396cf4704d2d7f8dc83fe92a6a34d9.bindTooltip(
+                `<div>
+                     S025: 世纪东方商城站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_30396cf4704d2d7f8dc83fe92a6a34d9.setIcon(icon_9cc386aae34888d7364b716e83a3632b);
+            
+    
+            var marker_35e82a46120a2029983bd72e5b3b35ea = L.marker(
+                [29.8016, 121.5172],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_877da8362da2e3daf7b1e0ac43bc0810 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fdd389f52eb60429f73b70894fec0392 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_860ba3bb3c8581a4344dc8208b3599c2 = $(`<div id="html_860ba3bb3c8581a4344dc8208b3599c2" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S026: 南部商务区站</strong><br>         桩位容量: 50 个<br>         初始库存: 38 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_fdd389f52eb60429f73b70894fec0392.setContent(html_860ba3bb3c8581a4344dc8208b3599c2);
+            
+        
+
+        marker_35e82a46120a2029983bd72e5b3b35ea.bindPopup(popup_fdd389f52eb60429f73b70894fec0392)
+        ;
+
+        
+    
+    
+            marker_35e82a46120a2029983bd72e5b3b35ea.bindTooltip(
+                `<div>
+                     S026: 南部商务区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_35e82a46120a2029983bd72e5b3b35ea.setIcon(icon_877da8362da2e3daf7b1e0ac43bc0810);
+            
+    
+            var marker_d14bbb4b12f698c03010f00fae62dd3f = L.marker(
+                [29.8081, 121.561],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_67a4dd549677808055f99086859f5ddb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9db966b8190c99d35ccc5e71792233a3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3b7bb3d34c4a5cb997937b1707904fb6 = $(`<div id="html_3b7bb3d34c4a5cb997937b1707904fb6" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S027: 高教园区西站</strong><br>         桩位容量: 20 个<br>         初始库存: 7 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_9db966b8190c99d35ccc5e71792233a3.setContent(html_3b7bb3d34c4a5cb997937b1707904fb6);
+            
+        
+
+        marker_d14bbb4b12f698c03010f00fae62dd3f.bindPopup(popup_9db966b8190c99d35ccc5e71792233a3)
+        ;
+
+        
+    
+    
+            marker_d14bbb4b12f698c03010f00fae62dd3f.bindTooltip(
+                `<div>
+                     S027: 高教园区西站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d14bbb4b12f698c03010f00fae62dd3f.setIcon(icon_67a4dd549677808055f99086859f5ddb);
+            
+    
+            var marker_dda14348527c17e2d948bed1bbb0e728 = L.marker(
+                [29.8081, 121.561],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_c0a80ba53b258eac9fd047e96d0321fd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7be1ad3f34d92e32812fee2f61dd32b9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_194e7605e1af2335fd30fd491f23dbb0 = $(`<div id="html_194e7605e1af2335fd30fd491f23dbb0" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S028: 高教园区东站</strong><br>         桩位容量: 30 个<br>         初始库存: 13 辆     <br>● 状态: 无调度操作</div></div>`)[0];
+                popup_7be1ad3f34d92e32812fee2f61dd32b9.setContent(html_194e7605e1af2335fd30fd491f23dbb0);
+            
+        
+
+        marker_dda14348527c17e2d948bed1bbb0e728.bindPopup(popup_7be1ad3f34d92e32812fee2f61dd32b9)
+        ;
+
+        
+    
+    
+            marker_dda14348527c17e2d948bed1bbb0e728.bindTooltip(
+                `<div>
+                     S028: 高教园区东站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dda14348527c17e2d948bed1bbb0e728.setIcon(icon_c0a80ba53b258eac9fd047e96d0321fd);
+            
+    
+            var marker_24d352ac21f9b18dc11303ca7d8595da = L.marker(
+                [29.7838, 121.9866],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_1d882e481562617e8e6c59a1aac8ad2a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c3577ad996802895887c7399f22ea596 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8a522deb51358685f600db06c91dd7d1 = $(`<div id="html_8a522deb51358685f600db06c91dd7d1" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S029: 梅山经济开发区站</strong><br>         桩位容量: 50 个<br>         初始库存: 40 辆     <br><span style="color:red;">● 状态: 车辆调出站（冗余站点）</span></div></div>`)[0];
+                popup_c3577ad996802895887c7399f22ea596.setContent(html_8a522deb51358685f600db06c91dd7d1);
+            
+        
+
+        marker_24d352ac21f9b18dc11303ca7d8595da.bindPopup(popup_c3577ad996802895887c7399f22ea596)
+        ;
+
+        
+    
+    
+            marker_24d352ac21f9b18dc11303ca7d8595da.bindTooltip(
+                `<div>
+                     S029: 梅山经济开发区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_24d352ac21f9b18dc11303ca7d8595da.setIcon(icon_1d882e481562617e8e6c59a1aac8ad2a);
+            
+    
+            var marker_1319e915d0e45769c78a9b18360831ef = L.marker(
+                [29.941, 121.6797],
+                {
+}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+            var icon_c83599ec7e1ad3d81849e8416db2cf7d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b4949999877a3c16aa2d4161a69f54f9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f99c07cb9a9803b784f1be5c76d09c63 = $(`<div id="html_f99c07cb9a9803b784f1be5c76d09c63" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>S030: 象山路社区站</strong><br>         桩位容量: 40 个<br>         初始库存: 5 辆     <br><span style="color:red;">● 状态: 车辆调出站（冗余站点）</span></div></div>`)[0];
+                popup_b4949999877a3c16aa2d4161a69f54f9.setContent(html_f99c07cb9a9803b784f1be5c76d09c63);
+            
+        
+
+        marker_1319e915d0e45769c78a9b18360831ef.bindPopup(popup_b4949999877a3c16aa2d4161a69f54f9)
+        ;
+
+        
+    
+    
+            marker_1319e915d0e45769c78a9b18360831ef.bindTooltip(
+                `<div>
+                     S030: 象山路社区站
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1319e915d0e45769c78a9b18360831ef.setIcon(icon_c83599ec7e1ad3d81849e8416db2cf7d);
+            
+    
+            var poly_line_40f001deb3c1691af229245d1e5d9f47 = L.polyline(
+                [[29.9505, 121.7072], [29.9079, 121.6444]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+        var popup_9989ddeb50d04984edb7d82fb59e6192 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4d0c272fc4cbd88467fcece5d45a9c60 = $(`<div id="html_4d0c272fc4cbd88467fcece5d45a9c60" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>调度路线: S020 → S002</strong><br>         调运车辆: <b>18 辆</b><br>         运输距离: 15.0 km<br>         单趟成本: 590.0 元     </div>     </div>`)[0];
+                popup_9989ddeb50d04984edb7d82fb59e6192.setContent(html_4d0c272fc4cbd88467fcece5d45a9c60);
+            
+        
+
+        poly_line_40f001deb3c1691af229245d1e5d9f47.bindPopup(popup_9989ddeb50d04984edb7d82fb59e6192)
+        ;
+
+        
+    
+    
+            poly_line_40f001deb3c1691af229245d1e5d9f47.bindTooltip(
+                `<div>
+                     调度: S020→S002(18辆)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6ee6a42d33b6376772a233c7c1d6c0b3 = L.polyline(
+                [[29.817, 121.5443], [29.7979, 121.5652]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+        var popup_c9f79bc6acfc584f52a208f7d06dc83d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0f1188385be3737872f098a230955aa8 = $(`<div id="html_0f1188385be3737872f098a230955aa8" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>调度路线: S010 → S007</strong><br>         调运车辆: <b>12 辆</b><br>         运输距离: 5.0 km<br>         单趟成本: 170.0 元     </div>     </div>`)[0];
+                popup_c9f79bc6acfc584f52a208f7d06dc83d.setContent(html_0f1188385be3737872f098a230955aa8);
+            
+        
+
+        poly_line_6ee6a42d33b6376772a233c7c1d6c0b3.bindPopup(popup_c9f79bc6acfc584f52a208f7d06dc83d)
+        ;
+
+        
+    
+    
+            poly_line_6ee6a42d33b6376772a233c7c1d6c0b3.bindTooltip(
+                `<div>
+                     调度: S010→S007(12辆)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f066497f0322557d09a4ae3b2de5d710 = L.polyline(
+                [[29.941, 121.6797], [29.8822, 121.6509]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+        var popup_67d03f4a46f64f2abd50a067aac38dba = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_360d90568cc14b9921311da19b264886 = $(`<div id="html_360d90568cc14b9921311da19b264886" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>调度路线: S030 → S003</strong><br>         调运车辆: <b>15 辆</b><br>         运输距离: 10.0 km<br>         单趟成本: 350.0 元     </div>     </div>`)[0];
+                popup_67d03f4a46f64f2abd50a067aac38dba.setContent(html_360d90568cc14b9921311da19b264886);
+            
+        
+
+        poly_line_f066497f0322557d09a4ae3b2de5d710.bindPopup(popup_67d03f4a46f64f2abd50a067aac38dba)
+        ;
+
+        
+    
+    
+            poly_line_f066497f0322557d09a4ae3b2de5d710.bindTooltip(
+                `<div>
+                     调度: S030→S003(15辆)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_43642a4638c54721d2f21aeb15bb4742 = L.polyline(
+                [[29.8106, 121.5622], [29.7991, 121.5659]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+        var popup_3868f27faf625524a25e59a6b9830c49 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0ff793a3587cc405d05754e233109980 = $(`<div id="html_0ff793a3587cc405d05754e233109980" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>调度路线: S011 → S008</strong><br>         调运车辆: <b>8 辆</b><br>         运输距离: 3.0 km<br>         单趟成本: 98.0 元     </div>     </div>`)[0];
+                popup_3868f27faf625524a25e59a6b9830c49.setContent(html_0ff793a3587cc405d05754e233109980);
+            
+        
+
+        poly_line_43642a4638c54721d2f21aeb15bb4742.bindPopup(popup_3868f27faf625524a25e59a6b9830c49)
+        ;
+
+        
+    
+    
+            poly_line_43642a4638c54721d2f21aeb15bb4742.bindTooltip(
+                `<div>
+                     调度: S011→S008(8辆)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bb78c84d53a14fd4109fe41375ab0d33 = L.polyline(
+                [[29.7838, 121.9866], [29.9228, 121.8758]],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff7f0e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_94b52317a5b054d6a18c2de01cfb4fa4);
+        
+    
+        var popup_82b3e38a86f06723fc83277b585c5048 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a38edf0a70ba4dd26ace9e6e06bab462 = $(`<div id="html_a38edf0a70ba4dd26ace9e6e06bab462" style="width: 100.0%; height: 100.0%;">     <div style="font-size:14px;">         <strong>调度路线: S029 → S022</strong><br>         调运车辆: <b>10 辆</b><br>         运输距离: 8.0 km<br>         单趟成本: 210.0 元     </div>     </div>`)[0];
+                popup_82b3e38a86f06723fc83277b585c5048.setContent(html_a38edf0a70ba4dd26ace9e6e06bab462);
+            
+        
+
+        poly_line_bb78c84d53a14fd4109fe41375ab0d33.bindPopup(popup_82b3e38a86f06723fc83277b585c5048)
+        ;
+
+        
+    
+    
+            poly_line_bb78c84d53a14fd4109fe41375ab0d33.bindTooltip(
+                `<div>
+                     调度: S029→S022(10辆)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
